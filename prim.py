@@ -10,133 +10,59 @@ class Prim:
     def executar(self, inicio):
 
         if self.grafo.direcionado:
-
-            print(
-                "Erro: o algoritmo de Prim funciona "
-                "em grafos nao direcionados."
+            raise ValueError(
+                "o algoritmo de Prim funciona em grafos nao direcionados."
             )
-
-            return False
-
 
         if inicio not in self.grafo.vertices:
-
-            print(
-                f"Erro: o vertice '{inicio}' nao existe."
-            )
-
-            return False
-
+            raise ValueError(f"o vertice '{inicio}' nao existe.")
 
         self.agm = []
         self.custo = 0
 
-        visitados = set()
-
-        visitados.add(inicio)
-
+        visitados = {inicio}
 
         while len(visitados) < len(self.grafo.vertices):
 
             menor_aresta = None
+            novo_vertice = None
 
+            for id in visitados:
 
-            for aresta in self.grafo.arestas.values():
+                for aresta in self.grafo.lista_adjacencia[id]:
 
-                origem_visitada = aresta.orig in visitados
+                    vizinho = self.grafo.outro_extremo(aresta, id)
 
-                destino_visitado = aresta.dest in visitados
+                    if vizinho in visitados:
+                        continue
 
-
-                # Origem visitada e destino ainda nao visitado
-
-                if origem_visitada and not destino_visitado:
-
-                    if (
-                        menor_aresta is None
-                        or aresta.val < menor_aresta.val
-                    ):
-
+                    if menor_aresta is None or aresta.val < menor_aresta.val:
                         menor_aresta = aresta
-
-
-                # Destino visitado e origem ainda nao visitada
-
-                elif destino_visitado and not origem_visitada:
-
-                    if (
-                        menor_aresta is None
-                        or aresta.val < menor_aresta.val
-                    ):
-
-                        menor_aresta = aresta
-
-
-            # Nenhuma aresta encontrada
-            # significa que o grafo nao eh conexo
+                        novo_vertice = vizinho
 
             if menor_aresta is None:
-
-                print("Erro: o grafo nao eh conexo.")
-
                 self.agm = []
-
                 self.custo = 0
-
-                return False
-
-
-            # Adiciona a menor aresta encontrada na AGM
+                raise ValueError("o grafo nao eh conexo.")
 
             self.agm.append(menor_aresta)
-
-
-            # Soma o peso da aresta
-
             self.custo += menor_aresta.val
+            visitados.add(novo_vertice)
 
 
-            # Marca os vertices como visitados
+    def texto(self):
 
-            visitados.add(menor_aresta.orig)
-
-            visitados.add(menor_aresta.dest)
-
-
-        return True
-
-
-    def mostrar_agm(self):
-
-        print("\n" + "=" * 50)
-
-        print("ARVORE GERADORA MINIMA - PRIM")
-
-        print("=" * 50)
-
+        texto = "ARVORE GERADORA MINIMA - PRIM\n\n"
 
         if not self.agm:
-
-            print("AGM vazia.")
-
-            print("=" * 50)
-
-            return
-
+            return texto + "AGM sem arestas (grafo com um unico vertice).\n"
 
         for aresta in self.agm:
-
-            print(
-                f"{aresta.id}: "
-                f"{aresta.orig} -- {aresta.dest} "
-                f"| peso = {aresta.val}"
+            texto += (
+                f"{aresta.id}: {aresta.orig} -- {aresta.dest} "
+                f"| peso = {aresta.val}\n"
             )
 
+        texto += f"\nCusto total da AGM: {self.custo}\n"
 
-        print("-" * 50)
-
-        print(
-            f"Custo total da AGM: {self.custo}"
-        )
-
-        print("=" * 50)
+        return texto
