@@ -49,11 +49,11 @@ class Grafo:
 
         aresta = self.arestas[id]
 
-        self.lista_adjacencia[aresta.orig].remove(aresta)
+        self.lista_adjacencia[aresta.orig].remove(aresta) #remove a aresta da lista de adj  
 
-        if not self.direcionado and aresta.orig != aresta.dest:
-            self.lista_adjacencia[aresta.dest].remove(aresta)
-
+        if not self.direcionado and aresta.orig != aresta.dest: #verifica se nao eh direcionado e nem os verts iguais 
+            self.lista_adjacencia[aresta.dest].remove(aresta) 
+                                                                #senao, remove a aresta  
         del self.arestas[id]
 
 
@@ -64,32 +64,32 @@ class Grafo:
 
         arestas_remover = []
 
-        for aresta in self.arestas.values():
+        for aresta in self.arestas.values(): #procura se tem arestas ligadas esse vertice 
 
             if aresta.orig == id or aresta.dest == id:
-                arestas_remover.append(aresta.id)
+                arestas_remover.append(aresta.id)  #adiciona a aresta em uma lista pra remover dps
 
         for id_aresta in arestas_remover:
-            self.remover_aresta(id_aresta)
+            self.remover_aresta(id_aresta) #chama a def pra remover as arestas dessa lista
 
         del self.vertices[id]
-        del self.lista_adjacencia[id]
+        del self.lista_adjacencia[id] 
 
 
-    def outro_extremo(self, aresta, id):
+    def outro_extremo(self, aresta, id):  
 
-        if aresta.orig == id:
+        if aresta.orig == id: #se a origem for igual o  vertice passado, retorna o outro vert da aresta
             return aresta.dest
 
-        return aresta.orig
+        return aresta.orig #senao, vai retornar a origem  
 
 
-    def texto_lista_adjacencia(self):
+    def texto_lista_adjacencia(self): #transforma a lista de adj em um texto formatado pro user
 
         if len(self.vertices) == 0:
             return "LISTA DE ADJACENCIA\n\nGrafo vazio."
 
-        seta = "->" if self.direcionado else "--"
+        seta = "->" if self.direcionado else "--" 
 
         texto = "LISTA DE ADJACENCIA\n\n"
 
@@ -110,49 +110,49 @@ class Grafo:
 
     def matriz_adjacencia(self):
 
-        vertices = list(self.vertices)
+        vertices = list(self.vertices) #pega cada vertice e bota numa lista
 
-        posicao = {id: i for i, id in enumerate(vertices)}
+        posicao = {id: i for i, id in enumerate(vertices)} #cria um dicionario com o vertice e a posicao dele  
 
-        matriz = [[0 for _ in vertices] for _ in vertices]
+        matriz = [[0 for _ in vertices] for _ in vertices] #preenhe a matriz toda com 0  
 
-        for aresta in self.arestas.values():
+        for aresta in self.arestas.values():  #vai passar pelas arestas e colocar 1 onde tem a orig e dest 
 
             i = posicao[aresta.orig]
             j = posicao[aresta.dest]
 
-            matriz[i][j] = 1
+            matriz[i][j] = 1 #representa de uma lado
 
             if not self.direcionado:
-                matriz[j][i] = 1
+                matriz[j][i] = 1 #se nao for direcionado, representa do outro lado tbm
 
         return vertices, matriz
 
 
     def matriz_incidencia(self):
 
-        vertices = list(self.vertices)
-        arestas = list(self.arestas.values())
+        vertices = list(self.vertices) #pega cada vertice e bota numa lista
+        arestas = list(self.arestas.values()) #pega cada aresta e bota numa lista
 
-        posicao = {id: i for i, id in enumerate(vertices)}
+        posicao = {id: i for i, id in enumerate(vertices)} #cria um dicionario com o vertice e a posicao dele
 
-        matriz = [[0 for _ in arestas] for _ in vertices]
+        matriz = [[0 for _ in arestas] for _ in vertices] #preenche a matriz toda com 0
 
-        for j, aresta in enumerate(arestas):
+        for j, aresta in enumerate(arestas): #percorre todas as arestas
 
             i_orig = posicao[aresta.orig]
             i_dest = posicao[aresta.dest]
 
-            if aresta.orig == aresta.dest:
+            if aresta.orig == aresta.dest: #se for laco - coloca 2
 
                 matriz[i_orig][j] = 2
 
-            elif self.direcionado:
+            elif self.direcionado: #se for direcionado - 1 pra orig e -1 pra dest
 
                 matriz[i_orig][j] = 1
                 matriz[i_dest][j] = -1
 
-            else:
+            else:                   #se for nao direcionado - 1 pros dois
 
                 matriz[i_orig][j] = 1
                 matriz[i_dest][j] = 1

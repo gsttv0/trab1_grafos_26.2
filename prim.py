@@ -3,7 +3,7 @@ class Prim:
     def __init__(self, grafo):
 
         self.grafo = grafo
-        self.agm = []
+        self.agm = [] #arvore geradora minima
         self.custo = 0
 
 
@@ -11,7 +11,7 @@ class Prim:
 
         if self.grafo.direcionado:
             raise ValueError(
-                "o algoritmo de Prim funciona em grafos nao direcionados."
+                "o algoritmo de Prim funciona em grafos NAO direcionados."
             )
 
         if inicio not in self.grafo.vertices:
@@ -20,27 +20,27 @@ class Prim:
         self.agm = []
         self.custo = 0
 
-        visitados = {inicio}
+        visitados = {inicio} #vert inicial ja entra como visitado 
 
-        while len(visitados) < len(self.grafo.vertices):
+        while len(visitados) < len(self.grafo.vertices): #faz enquanto visitados for menor q total de verts
 
             menor_aresta = None
             novo_vertice = None
 
             for id in visitados:
 
-                for aresta in self.grafo.lista_adjacencia[id]:
+                for aresta in self.grafo.lista_adjacencia[id]: #pega as arestas do vertice atual
 
-                    vizinho = self.grafo.outro_extremo(aresta, id)
+                    vizinho = self.grafo.outro_extremo(aresta, id) #pega o outro vertice da aresta
 
-                    if vizinho in visitados:
+                    if vizinho in visitados: #verifica se ja foi visitado 
                         continue
 
-                    if menor_aresta is None or aresta.val < menor_aresta.val:
+                    if menor_aresta is None or aresta.val < menor_aresta.val: #verifica se a aresta atual eh menor q a menor aresta ja encontrada
                         menor_aresta = aresta
                         novo_vertice = vizinho
 
-            if menor_aresta is None:
+            if menor_aresta is None: #se nao encontrar nenhuma aresta, o grafo nao eh conexo
                 self.agm = []
                 self.custo = 0
                 raise ValueError("o grafo nao eh conexo.")
