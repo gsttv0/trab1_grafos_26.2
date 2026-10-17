@@ -12,12 +12,12 @@ class Grafo:
         self.lista_adjacencia = {}
 
 
-    def inserir_vertice(self, id):
+    def inserir_vertice(self, id, latitude=None, longitude=None): #add latitude e longitude
 
         if id in self.vertices:
             raise ValueError(f"o vertice '{id}' ja existe.")
 
-        self.vertices[id] = Vertice(id)
+        self.vertices[id] = Vertice(id, latitude, longitude)
         self.lista_adjacencia[id] = []
 
 
@@ -78,7 +78,7 @@ class Grafo:
 
     def outro_extremo(self, aresta, id):  
 
-        if aresta.orig == id: #se a origem for igual o  vertice passado, retorna o outro vert da aresta
+        if aresta.orig == id: #se a origem for igual o vertice passado, retorna o outro vert da aresta
             return aresta.dest
 
         return aresta.orig #senao, vai retornar a origem  
