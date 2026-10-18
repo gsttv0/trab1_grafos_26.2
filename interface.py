@@ -19,9 +19,7 @@ class Interface:
         self.janela = tk.Tk()
 
         self.janela.title("Sistema de Grafos")
-
         self.janela.geometry("700x700")
-
         self.janela.resizable(False, False)
 
         self.criar_interface()
@@ -29,10 +27,7 @@ class Interface:
 
     def criar_interface(self):
 
-        # ==========================================
-        # TITULO
-        # ==========================================
-
+      
         titulo = tk.Label(
             self.janela,
             text="SISTEMA DE GRAFOS",
@@ -40,7 +35,6 @@ class Interface:
         )
 
         titulo.pack(pady=20)
-
 
         subtitulo = tk.Label(
             self.janela,
@@ -50,10 +44,6 @@ class Interface:
 
         subtitulo.pack()
 
-
-        # ==========================================
-        # MOLDURA DO MENU
-        # ==========================================
 
         moldura = tk.Frame(
             self.janela,
@@ -69,9 +59,6 @@ class Interface:
         )
 
 
-        # ==========================================
-        # BOTOES
-        # ==========================================
 
         self.criar_botao(
             moldura,
@@ -165,9 +152,6 @@ class Interface:
         botao.pack(pady=4)
 
 
-    # ==========================================
-    # INSERIR VERTICE
-    # ==========================================
 
     def inserir_vertice(self):
 
@@ -270,10 +254,7 @@ class Interface:
             )
 
 
-    # ==========================================
-    # INSERIR ARESTA
-    # ==========================================
-
+ 
     def inserir_aresta(self):
 
         id_aresta = simpledialog.askstring(
@@ -334,9 +315,6 @@ class Interface:
             )
 
 
-    # ==========================================
-    # REMOVER VERTICE
-    # ==========================================
 
     def remover_vertice(self):
 
@@ -368,9 +346,6 @@ class Interface:
             )
 
 
-    # ==========================================
-    # REMOVER ARESTA
-    # ==========================================
 
     def remover_aresta(self):
 
@@ -402,10 +377,6 @@ class Interface:
             )
 
 
-    # ==========================================
-    # MATRIZ DE ADJACENCIA
-    # ==========================================
-
     def mostrar_matriz_adjacencia(self):
 
         texto = self.grafo.texto_matriz_adjacencia()
@@ -416,10 +387,6 @@ class Interface:
         )
 
 
-    # ==========================================
-    # MATRIZ DE INCIDENCIA
-    # ==========================================
-
     def mostrar_matriz_incidencia(self):
 
         texto = self.grafo.texto_matriz_incidencia()
@@ -429,10 +396,6 @@ class Interface:
             texto
         )
 
-
-    # ==========================================
-    # PRIM
-    # ==========================================
 
     def executar_prim(self):
 
@@ -522,10 +485,6 @@ class Interface:
             )
 
 
-    # ==========================================
-    # INFORMACOES DO GRAFO
-    # ==========================================
-
     def mostrar_grafo(self):
 
         texto = "INFORMACOES DO GRAFO\n\n"
@@ -602,10 +561,7 @@ class Interface:
         )
 
 
-    # ==========================================
     # DSATUR
-    # ==========================================
-
     def executar_dsatur(self):
 
         if not self.grafo.vertices:
@@ -628,11 +584,7 @@ class Interface:
             cores
         )
 
-
-    # ==========================================
     # RESULTADO GRAFICO DO DSATUR
-    # ==========================================
-
     def mostrar_resultado_dsatur(
         self,
         cores
@@ -678,11 +630,7 @@ class Interface:
             pady=10
         )
 
-
-        # ==========================================
         # GRAFO ORIGINAL
-        # ==========================================
-
         moldura_original = tk.Frame(
             moldura_grafos
         )
@@ -713,11 +661,7 @@ class Interface:
 
         canvas_original.pack()
 
-
-        # ==========================================
         # GRAFO COLORIDO
-        # ==========================================
-
         moldura_colorido = tk.Frame(
             moldura_grafos
         )
@@ -759,11 +703,7 @@ class Interface:
             cores=cores
         )
 
-
-    # ==========================================
     # CARREGAR GRAFO DE ARQUIVO
-    # ==========================================
-
     def carregar_grafo(self):
 
         caminho = filedialog.askopenfilename(
@@ -829,11 +769,7 @@ class Interface:
                 f"{erro}"
             )
 
-
-    # ==========================================
     # CARREGAR MAPA DO PARANA
-    # ==========================================
-
     def carregar_parana(self):
 
         try:
@@ -856,11 +792,7 @@ class Interface:
                 f"Nao foi possivel carregar o mapa.\n\n{erro}"
             )
 
-
-    # ==========================================
     # EXECUTAR A*
-    # ==========================================
-
     def executar_astar(self):
 
         if not self.grafo.vertices:
@@ -872,11 +804,7 @@ class Interface:
 
             return
 
-
-        # ==========================================
         # VERIFICAR COORDENADAS
-        # ==========================================
-
         vertices_sem_coordenadas = []
 
 
@@ -926,11 +854,7 @@ class Interface:
             self.grafo.vertices.keys()
         )
 
-
-        # ==========================================
         # JANELA DE SELECAO
-        # ==========================================
-
         janela_selecao = tk.Toplevel(
             self.janela
         )
@@ -1105,11 +1029,7 @@ class Interface:
             pady=20
         )
 
-
-    # ==========================================
     # RESULTADO DO A*
-    # ==========================================
-
     def mostrar_resultado_astar(
         self,
         astar,
@@ -1146,11 +1066,7 @@ class Interface:
             pady=10
         )
 
-
-        # ==========================================
         # INFORMACOES
-        # ==========================================
-
         moldura_info = tk.Frame(
             janela_resultado,
             bd=2,
@@ -1212,11 +1128,7 @@ class Interface:
             pady=(2, 8)
         )
 
-
-        # ==========================================
         # CONTEUDO
-        # ==========================================
-
         moldura_conteudo = tk.Frame(
             janela_resultado
         )
@@ -1228,11 +1140,7 @@ class Interface:
             pady=10
         )
 
-
-        # ==========================================
         # GRAFO
-        # ==========================================
-
         moldura_grafo = tk.Frame(
             moldura_conteudo
         )
@@ -1263,11 +1171,7 @@ class Interface:
 
         canvas.pack()
 
-
-        # ==========================================
         # HEURISTICAS
-        # ==========================================
-
         moldura_heuristicas = tk.Frame(
             moldura_conteudo,
             bd=2,
@@ -1334,21 +1238,150 @@ class Interface:
             canvas,
             caminho=caminho,
             largura=760,
-            altura=480
+            altura=480,
+            usar_coordenadas=True
+        )
+
+    # CALCULAR POSICOES GEOGRAFICAS
+    def calcular_posicoes_geograficas(
+        self,
+        largura,
+        altura
+    ):
+
+        vertices = list(
+            self.grafo.vertices.values()
         )
 
 
-    # ==========================================
-    # DESENHAR GRAFO
-    # ==========================================
+        if not vertices:
+            return None
 
-    def desenhar_grafo(
+
+        for vertice in vertices:
+
+            if (
+                vertice.latitude is None
+                or vertice.longitude is None
+            ):
+
+                return None
+
+
+        latitudes = [
+            vertice.latitude
+            for vertice in vertices
+        ]
+
+        longitudes = [
+            vertice.longitude
+            for vertice in vertices
+        ]
+
+
+        latitude_minima = min(
+            latitudes
+        )
+
+        latitude_maxima = max(
+            latitudes
+        )
+
+        longitude_minima = min(
+            longitudes
+        )
+
+        longitude_maxima = max(
+            longitudes
+        )
+
+
+        margem_x = 80
+        margem_y = 60
+
+
+        largura_util = (
+            largura - 2 * margem_x
+        )
+
+        altura_util = (
+            altura - 2 * margem_y
+        )
+
+
+        diferenca_longitude = (
+            longitude_maxima
+            - longitude_minima
+        )
+
+        diferenca_latitude = (
+            latitude_maxima
+            - latitude_minima
+        )
+
+
+        if diferenca_longitude == 0:
+
+            diferenca_longitude = 1
+
+
+        if diferenca_latitude == 0:
+
+            diferenca_latitude = 1
+
+
+        posicoes = {}
+
+
+        for id_vertice, vertice in self.grafo.vertices.items():
+
+            proporcao_x = (
+                (
+                    vertice.longitude
+                    - longitude_minima
+                )
+                /
+                diferenca_longitude
+            )
+
+
+            proporcao_y = (
+                (
+                    latitude_maxima
+                    - vertice.latitude
+                )
+                /
+                diferenca_latitude
+            )
+
+
+            x = (
+                margem_x
+                + proporcao_x
+                * largura_util
+            )
+
+
+            y = (
+                margem_y
+                + proporcao_y
+                * altura_util
+            )
+
+
+            posicoes[id_vertice] = (
+                x,
+                y
+            )
+
+
+        return posicoes
+
+    # CALCULAR POSICOES CIRCULARES
+    def calcular_posicoes_circulares(
         self,
-        canvas,
-        cores=None,
-        caminho=None,
-        largura=500,
-        altura=500
+        largura,
+        altura
     ):
 
         vertices = list(
@@ -1360,10 +1393,6 @@ class Interface:
         )
 
 
-        if quantidade == 0:
-            return
-
-
         centro_x = largura / 2
         centro_y = altura / 2
 
@@ -1371,8 +1400,6 @@ class Interface:
             largura,
             altura
         ) * 0.36
-
-        raio_vertice = 22
 
 
         posicoes = {}
@@ -1387,11 +1414,13 @@ class Interface:
                 - math.pi / 2
             )
 
+
             x = (
                 centro_x
                 + raio_grafo
                 * math.cos(angulo)
             )
+
 
             y = (
                 centro_y
@@ -1399,16 +1428,61 @@ class Interface:
                 * math.sin(angulo)
             )
 
+
             posicoes[id_vertice] = (
                 x,
                 y
             )
 
 
-        # ==========================================
-        # ARESTAS DO CAMINHO A*
-        # ==========================================
+        return posicoes
 
+    # DESENHAR GRAFO
+    def desenhar_grafo(
+        self,
+        canvas,
+        cores=None,
+        caminho=None,
+        largura=500,
+        altura=500,
+        usar_coordenadas=False
+    ):
+
+        vertices = list(
+            self.grafo.vertices.keys()
+        )
+
+
+        if not vertices:
+            return
+
+
+        raio_vertice = 22
+
+        # POSICOES DOS VERTICES
+        posicoes = None
+
+
+        if usar_coordenadas:
+
+            posicoes = (
+                self.calcular_posicoes_geograficas(
+                    largura,
+                    altura
+                )
+            )
+
+
+        if posicoes is None:
+
+            posicoes = (
+                self.calcular_posicoes_circulares(
+                    largura,
+                    altura
+                )
+            )
+
+        # ARESTAS DO CAMINHO A*
         arestas_caminho = set()
 
 
@@ -1442,11 +1516,7 @@ class Interface:
                         )
                     )
 
-
-        # ==========================================
         # DESENHAR ARESTAS
-        # ==========================================
-
         for aresta in self.grafo.arestas.values():
 
             x1, y1 = posicoes[
@@ -1488,11 +1558,7 @@ class Interface:
                 cor_aresta = "black"
                 largura_aresta = 2
 
-
-            # ==========================================
             # GRAFO DIRECIONADO
-            # ==========================================
-
             if self.grafo.direcionado:
 
                 dx = x2 - x1
@@ -1506,11 +1572,15 @@ class Interface:
                 if distancia > 0:
 
                     deslocamento_x = (
-                        raio_vertice * dx / distancia
+                        raio_vertice
+                        * dx
+                        / distancia
                     )
 
                     deslocamento_y = (
-                        raio_vertice * dy / distancia
+                        raio_vertice
+                        * dy
+                        / distancia
                     )
 
 
@@ -1550,10 +1620,7 @@ class Interface:
                 )
 
 
-            # ==========================================
             # GRAFO NAO DIRECIONADO
-            # ==========================================
-
             else:
 
                 canvas.create_line(
@@ -1565,7 +1632,7 @@ class Interface:
                     fill=cor_aresta
                 )
 
-
+            # PESO DA ARESTA
             meio_x = (
                 x1 + x2
             ) / 2
@@ -1576,9 +1643,9 @@ class Interface:
 
 
             canvas.create_rectangle(
-                meio_x - 17,
+                meio_x - 20,
                 meio_y - 10,
-                meio_x + 17,
+                meio_x + 20,
                 meio_y + 10,
                 fill="white",
                 outline=""
@@ -1593,11 +1660,7 @@ class Interface:
                 font=("Arial", 9, "bold")
             )
 
-
-        # ==========================================
         # PALETA DO DSATUR
-        # ==========================================
-
         paleta = [
             "#ff6b6b",
             "#4dabf7",
@@ -1611,11 +1674,7 @@ class Interface:
             "#ced4da"
         ]
 
-
-        # ==========================================
         # DESENHAR VERTICES
-        # ==========================================
-
         for id_vertice in vertices:
 
             x, y = posicoes[
@@ -1664,28 +1723,32 @@ class Interface:
                 width=largura_contorno
             )
 
+            # ID DO VERTICE
+            if usar_coordenadas:
 
-            canvas.create_text(
-                x,
-                y,
-                text=str(id_vertice),
-                font=("Arial", 9, "bold")
-            )
+                canvas.create_text(
+                    x,
+                    y - raio_vertice - 9,
+                    text=str(id_vertice),
+                    font=("Arial", 9, "bold")
+                )
+
+            else:
+
+                canvas.create_text(
+                    x,
+                    y,
+                    text=str(id_vertice),
+                    font=("Arial", 9, "bold")
+                )
 
 
-    # ==========================================
     # SAIR
-    # ==========================================
-
     def sair(self):
 
         self.janela.destroy()
 
-
-    # ==========================================
     # INICIAR INTERFACE
-    # ==========================================
-
     def executar(self):
 
         self.janela.mainloop()
