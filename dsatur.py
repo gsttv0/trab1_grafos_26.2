@@ -10,9 +10,9 @@ class DSATUR:
 
         vizinhos = []
 
-        for aresta in self.grafo.lista_adjacencia[id_vertice]: #percorre as arestas ligadas ao vertice
+        for arco in self.grafo.lista_adjacencia[id_vertice]: #percorre os arcos ligados ao vertice
 
-            vizinho = self.grafo.outro_extremo(aresta, id_vertice) #pega a aresta ligada e bota em vizinho
+            vizinho = self.grafo.outro_extremo(arco, id_vertice) #pega o arco ligado e bota em vizinho
 
             if vizinho not in vizinhos: #se não estiver em vizinhos
                 vizinhos.append(vizinho) #add

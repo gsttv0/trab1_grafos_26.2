@@ -37,9 +37,9 @@ def carregar_grafo_arquivo(caminho_arquivo, direcionado=False):
                 secao = "VERTICES"
                 continue
 
-            if linha.upper() == "ARESTAS":
+            if linha.upper() in ("ARCOS", "ARESTAS"):
 
-                secao = "ARESTAS"
+                secao = "ARCOS"
                 continue
 
 
@@ -98,10 +98,10 @@ def carregar_grafo_arquivo(caminho_arquivo, direcionado=False):
 
 
             # ==========================================
-            # ARESTAS
+            # ARCOS
             # ==========================================
 
-            elif secao == "ARESTAS":
+            elif secao == "ARCOS":
 
                 dados = [
                     dado.strip()
@@ -112,10 +112,10 @@ def carregar_grafo_arquivo(caminho_arquivo, direcionado=False):
 
                     raise ValueError(
                         f"Linha {numero_linha}: "
-                        "formato de aresta invalido."
+                        "formato de arco invalido."
                     )
 
-                id_aresta = dados[0]
+                id_arco = dados[0]
                 origem = dados[1]
                 destino = dados[2]
 
@@ -132,8 +132,8 @@ def carregar_grafo_arquivo(caminho_arquivo, direcionado=False):
                         "peso invalido."
                     )
 
-                grafo.inserir_aresta(
-                    id_aresta,
+                grafo.inserir_arco(
+                    id_arco,
                     origem,
                     destino,
                     peso
@@ -144,7 +144,7 @@ def carregar_grafo_arquivo(caminho_arquivo, direcionado=False):
 
                 raise ValueError(
                     f"Linha {numero_linha}: "
-                    "defina VERTICES ou ARESTAS "
+                    "defina VERTICES ou ARCOS "
                     "antes dos dados."
                 )
 

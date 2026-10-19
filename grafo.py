@@ -1,5 +1,5 @@
 from vertice import Vertice
-from aresta import Aresta
+from arco import Arco
 
 
 class Grafo:
@@ -8,7 +8,7 @@ class Grafo:
 
         self.direcionado = direcionado
         self.vertices = {}
-        self.arestas = {}
+        self.arcos = {}
         self.lista_adjacencia = {}
 
 
@@ -21,7 +21,7 @@ class Grafo:
         self.lista_adjacencia[id] = []
 
 
-    def inserir_aresta(self, id, orig, dest, val):
+    def inserir_arco(self, id, orig, dest, val):
 
         if orig not in self.vertices:
             raise ValueError(f"o vertice '{orig}' nao existe.")
@@ -29,32 +29,32 @@ class Grafo:
         if dest not in self.vertices:
             raise ValueError(f"o vertice '{dest}' nao existe.")
 
-        if id in self.arestas:
-            raise ValueError(f"a aresta/arco '{id}' ja existe.")
+        if id in self.arcos:
+            raise ValueError(f"o arco '{id}' ja existe.")
 
-        aresta = Aresta(id, orig, dest, val)
+        arco = Arco(id, orig, dest, val)
 
-        self.arestas[id] = aresta
+        self.arcos[id] = arco
 
-        self.lista_adjacencia[orig].append(aresta)
+        self.lista_adjacencia[orig].append(arco)
 
         if not self.direcionado and orig != dest:
-            self.lista_adjacencia[dest].append(aresta)
+            self.lista_adjacencia[dest].append(arco)
 
 
-    def remover_aresta(self, id):
+    def remover_arco(self, id):
 
-        if id not in self.arestas:
-            raise ValueError(f"a aresta/arco '{id}' nao existe.")
+        if id not in self.arcos:
+            raise ValueError(f"o arco '{id}' nao existe.")
 
-        aresta = self.arestas[id]
+        arco = self.arcos[id]
 
-        self.lista_adjacencia[aresta.orig].remove(aresta) #remove a aresta da lista de adj  
+        self.lista_adjacencia[arco.orig].remove(arco) #remove o arco da lista de adj
 
-        if not self.direcionado and aresta.orig != aresta.dest: #verifica se nao eh direcionado e nem os verts iguais 
-            self.lista_adjacencia[aresta.dest].remove(aresta) 
-                                                                #senao, remove a aresta  
-        del self.arestas[id]
+        if not self.direcionado and arco.orig != arco.dest: #verifica se nao eh direcionado e nem os verts iguais
+            self.lista_adjacencia[arco.dest].remove(arco)
+                                                                #senao, remove o arco
+        del self.arcos[id]
 
 
     def remover_vertice(self, id):
@@ -62,26 +62,26 @@ class Grafo:
         if id not in self.vertices:
             raise ValueError(f"o vertice '{id}' nao existe.")
 
-        arestas_remover = []
+        arcos_remover = []
 
-        for aresta in self.arestas.values(): #procura se tem arestas ligadas esse vertice 
+        for arco in self.arcos.values(): #procura se tem arcos ligados esse vertice
 
-            if aresta.orig == id or aresta.dest == id:
-                arestas_remover.append(aresta.id)  #adiciona a aresta em uma lista pra remover dps
+            if arco.orig == id or arco.dest == id:
+                arcos_remover.append(arco.id)  #adiciona o arco em uma lista pra remover dps
 
-        for id_aresta in arestas_remover:
-            self.remover_aresta(id_aresta) #chama a def pra remover as arestas dessa lista
+        for id_arco in arcos_remover:
+            self.remover_arco(id_arco) #chama a def pra remover os arcos dessa lista
 
         del self.vertices[id]
         del self.lista_adjacencia[id] 
 
 
-    def outro_extremo(self, aresta, id):  
+    def outro_extremo(self, arco, id):
 
-        if aresta.orig == id: #se a origem for igual o vertice passado, retorna o outro vert da aresta
-            return aresta.dest
+        if arco.orig == id: #se a origem for igual o vertice passado, retorna o outro vert do arco
+            return arco.dest
 
-        return aresta.orig #senao, vai retornar a origem  
+        return arco.orig #senao, vai retornar a origem
 
 
     def texto_lista_adjacencia(self): #transforma a lista de adj em um texto formatado pro user
@@ -97,11 +97,11 @@ class Grafo:
 
             texto += f"{id} :"
 
-            for aresta in self.lista_adjacencia[id]:
+            for arco in self.lista_adjacencia[id]:
 
-                vizinho = self.outro_extremo(aresta, id)
+                vizinho = self.outro_extremo(arco, id)
 
-                texto += f"  {seta} {vizinho} [{aresta.id}, peso={aresta.val}]"
+                texto += f"  {seta} {vizinho} [{arco.id}, peso={arco.val}]"
 
             texto += "\n"
 
@@ -116,10 +116,10 @@ class Grafo:
 
         matriz = [[0 for _ in vertices] for _ in vertices] #preenhe a matriz toda com 0  
 
-        for aresta in self.arestas.values():  #vai passar pelas arestas e colocar 1 onde tem a orig e dest 
+        for arco in self.arcos.values():  #vai passar pelos arcos e colocar 1 onde tem a orig e dest
 
-            i = posicao[aresta.orig]
-            j = posicao[aresta.dest]
+            i = posicao[arco.orig]
+            j = posicao[arco.dest]
 
             matriz[i][j] = 1 #representa de uma lado
 
@@ -132,18 +132,18 @@ class Grafo:
     def matriz_incidencia(self):
 
         vertices = list(self.vertices) #pega cada vertice e bota numa lista
-        arestas = list(self.arestas.values()) #pega cada aresta e bota numa lista
+        arcos = list(self.arcos.values()) #pega cado arco e bota numa lista
 
         posicao = {id: i for i, id in enumerate(vertices)} #cria um dicionario com o vertice e a posicao dele
 
-        matriz = [[0 for _ in arestas] for _ in vertices] #preenche a matriz toda com 0
+        matriz = [[0 for _ in arcos] for _ in vertices] #preenche a matriz toda com 0
 
-        for j, aresta in enumerate(arestas): #percorre todas as arestas
+        for j, arco in enumerate(arcos): #percorre todas os arcos
 
-            i_orig = posicao[aresta.orig]
-            i_dest = posicao[aresta.dest]
+            i_orig = posicao[arco.orig]
+            i_dest = posicao[arco.dest]
 
-            if aresta.orig == aresta.dest: #se for laco - coloca 2
+            if arco.orig == arco.dest: #se for laco - coloca 2
 
                 matriz[i_orig][j] = 2
 
@@ -157,7 +157,7 @@ class Grafo:
                 matriz[i_orig][j] = 1
                 matriz[i_dest][j] = 1
 
-        return vertices, [a.id for a in arestas], matriz
+        return vertices, [a.id for a in arcos], matriz
 
 
     def formatar_matriz(self, titulo, linhas, colunas, matriz):
@@ -166,7 +166,7 @@ class Grafo:
             return f"{titulo}\n\nGrafo vazio."
 
         if len(colunas) == 0:
-            return f"{titulo}\n\nO grafo nao possui arestas/arcos."
+            return f"{titulo}\n\nO grafo nao possui arcos."
 
         largura = max(len(str(x)) for x in linhas + colunas) + 3
 
@@ -202,8 +202,8 @@ class Grafo:
 
     def texto_matriz_incidencia(self):
 
-        vertices, arestas, matriz = self.matriz_incidencia()
+        vertices, arcos, matriz = self.matriz_incidencia()
 
         return self.formatar_matriz(
-            "MATRIZ DE INCIDENCIA", vertices, arestas, matriz
+            "MATRIZ DE INCIDENCIA", vertices, arcos, matriz
         )

@@ -68,8 +68,8 @@ class Interface:
 
         self.criar_botao(
             moldura,
-            "2 - Inserir aresta/arco",
-            self.inserir_aresta
+            "2 - Inserir arco",
+            self.inserir_arco
         )
 
         self.criar_botao(
@@ -80,8 +80,8 @@ class Interface:
 
         self.criar_botao(
             moldura,
-            "4 - Remover aresta/arco",
-            self.remover_aresta
+            "4 - Remover arco",
+            self.remover_arco
         )
 
         self.criar_botao(
@@ -255,19 +255,19 @@ class Interface:
 
 
  
-    def inserir_aresta(self):
+    def inserir_arco(self):
 
-        id_aresta = simpledialog.askstring(
-            "Inserir aresta",
-            "Digite o ID da aresta/arco:"
+        id_arco = simpledialog.askstring(
+            "Inserir arco",
+            "Digite o ID do arco:"
         )
 
-        if not id_aresta:
+        if not id_arco:
             return
 
 
         origem = simpledialog.askstring(
-            "Inserir aresta",
+            "Inserir arco",
             "Digite o vertice de origem:"
         )
 
@@ -276,7 +276,7 @@ class Interface:
 
 
         destino = simpledialog.askstring(
-            "Inserir aresta",
+            "Inserir arco",
             "Digite o vertice de destino:"
         )
 
@@ -285,7 +285,7 @@ class Interface:
 
 
         peso = simpledialog.askfloat(
-            "Inserir aresta",
+            "Inserir arco",
             "Digite o peso:"
         )
 
@@ -295,8 +295,8 @@ class Interface:
 
         try:
 
-            self.grafo.inserir_aresta(
-                id_aresta,
+            self.grafo.inserir_arco(
+                id_arco,
                 origem,
                 destino,
                 peso
@@ -304,7 +304,7 @@ class Interface:
 
             messagebox.showinfo(
                 "Sucesso",
-                f"Aresta/arco '{id_aresta}' inserido."
+                f"Arco '{id_arco}' inserido."
             )
 
         except ValueError as erro:
@@ -347,26 +347,26 @@ class Interface:
 
 
 
-    def remover_aresta(self):
+    def remover_arco(self):
 
-        id_aresta = simpledialog.askstring(
-            "Remover aresta",
-            "Digite o ID da aresta/arco:"
+        id_arco = simpledialog.askstring(
+            "Remover arco",
+            "Digite o ID do arco:"
         )
 
-        if not id_aresta:
+        if not id_arco:
             return
 
 
         try:
 
-            self.grafo.remover_aresta(
-                id_aresta
+            self.grafo.remover_arco(
+                id_arco
             )
 
             messagebox.showinfo(
                 "Sucesso",
-                f"Aresta/arco '{id_aresta}' removido."
+                f"Arco '{id_arco}' removido."
             )
 
         except ValueError as erro:
@@ -455,13 +455,13 @@ class Interface:
             texto = "ARVORE GERADORA MINIMA\n\n"
 
 
-            for aresta in prim.agm:
+            for arco in prim.agm:
 
                 texto += (
-                    f"{aresta.id}: "
-                    f"{aresta.orig} -- "
-                    f"{aresta.dest} "
-                    f"| peso = {aresta.val}\n"
+                    f"{arco.id}: "
+                    f"{arco.orig} -- "
+                    f"{arco.dest} "
+                    f"| peso = {arco.val}\n"
                 )
 
 
@@ -525,34 +525,34 @@ class Interface:
             texto += "Nenhum vertice.\n"
 
 
-        texto += "\nArestas/Arcos:\n"
+        texto += "\nArcos:\n"
 
 
-        if self.grafo.arestas:
+        if self.grafo.arcos:
 
-            for aresta in self.grafo.arestas.values():
+            for arco in self.grafo.arcos.values():
 
                 if self.grafo.direcionado:
 
                     texto += (
-                        f"- {aresta.id}: "
-                        f"{aresta.orig} -> "
-                        f"{aresta.dest} "
-                        f"(peso={aresta.val})\n"
+                        f"- {arco.id}: "
+                        f"{arco.orig} -> "
+                        f"{arco.dest} "
+                        f"(peso={arco.val})\n"
                     )
 
                 else:
 
                     texto += (
-                        f"- {aresta.id}: "
-                        f"{aresta.orig} -- "
-                        f"{aresta.dest} "
-                        f"(peso={aresta.val})\n"
+                        f"- {arco.id}: "
+                        f"{arco.orig} -- "
+                        f"{arco.dest} "
+                        f"(peso={arco.val})\n"
                     )
 
         else:
 
-            texto += "Nenhuma aresta/arco.\n"
+            texto += "Nenhum arco.\n"
 
 
         messagebox.showinfo(
@@ -757,7 +757,7 @@ class Interface:
                 "Grafo carregado com sucesso.\n\n"
                 f"Tipo: {tipo}\n"
                 f"Vertices: {len(self.grafo.vertices)}\n"
-                f"Arestas/Arcos: {len(self.grafo.arestas)}"
+                f"Arcos: {len(self.grafo.arcos)}"
             )
 
 
@@ -781,7 +781,7 @@ class Interface:
                 "Mapa do Parana",
                 "Mapa do Parana carregado com sucesso.\n\n"
                 f"Vertices: {len(self.grafo.vertices)}\n"
-                f"Arestas: {len(self.grafo.arestas)}"
+                f"Arcos: {len(self.grafo.arcos)}"
             )
 
 
@@ -1482,8 +1482,8 @@ class Interface:
                 )
             )
 
-        # ARESTAS DO CAMINHO A*
-        arestas_caminho = set()
+        # ARCOS DO CAMINHO A*
+        arcos_caminho = set()
 
 
         if caminho is not None:
@@ -1498,7 +1498,7 @@ class Interface:
 
                 if self.grafo.direcionado:
 
-                    arestas_caminho.add(
+                    arcos_caminho.add(
                         (
                             origem,
                             destino
@@ -1507,7 +1507,7 @@ class Interface:
 
                 else:
 
-                    arestas_caminho.add(
+                    arcos_caminho.add(
                         frozenset(
                             [
                                 origem,
@@ -1516,47 +1516,47 @@ class Interface:
                         )
                     )
 
-        # DESENHAR ARESTAS
-        for aresta in self.grafo.arestas.values():
+        # DESENHAR ARCOS
+        for arco in self.grafo.arcos.values():
 
             x1, y1 = posicoes[
-                aresta.orig
+                arco.orig
             ]
 
             x2, y2 = posicoes[
-                aresta.dest
+                arco.dest
             ]
 
 
             if self.grafo.direcionado:
 
-                chave_aresta = (
-                    aresta.orig,
-                    aresta.dest
+                chave_arco = (
+                    arco.orig,
+                    arco.dest
                 )
 
             else:
 
-                chave_aresta = frozenset(
+                chave_arco = frozenset(
                     [
-                        aresta.orig,
-                        aresta.dest
+                        arco.orig,
+                        arco.dest
                     ]
                 )
 
 
             if (
                 caminho is not None
-                and chave_aresta in arestas_caminho
+                and chave_arco in arcos_caminho
             ):
 
-                cor_aresta = "red"
-                largura_aresta = 5
+                cor_arco = "red"
+                largura_arco = 5
 
             else:
 
-                cor_aresta = "black"
-                largura_aresta = 2
+                cor_arco = "black"
+                largura_arco = 2
 
             # GRAFO DIRECIONADO
             if self.grafo.direcionado:
@@ -1613,8 +1613,8 @@ class Interface:
                     inicio_y,
                     fim_x,
                     fim_y,
-                    width=largura_aresta,
-                    fill=cor_aresta,
+                    width=largura_arco,
+                    fill=cor_arco,
                     arrow=tk.LAST,
                     arrowshape=(12, 15, 5)
                 )
@@ -1628,11 +1628,11 @@ class Interface:
                     y1,
                     x2,
                     y2,
-                    width=largura_aresta,
-                    fill=cor_aresta
+                    width=largura_arco,
+                    fill=cor_arco
                 )
 
-            # PESO DA ARESTA
+            # PESO DO ARCO
             meio_x = (
                 x1 + x2
             ) / 2
@@ -1655,8 +1655,8 @@ class Interface:
             canvas.create_text(
                 meio_x,
                 meio_y,
-                text=str(aresta.val),
-                fill=cor_aresta,
+                text=str(arco.val),
+                fill=cor_arco,
                 font=("Arial", 9, "bold")
             )
 

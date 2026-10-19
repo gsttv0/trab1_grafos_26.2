@@ -88,24 +88,24 @@ class AStar:
 
         vizinhos = []
 
-        for aresta in self.grafo.lista_adjacencia[id_vertice]:
+        for arco in self.grafo.lista_adjacencia[id_vertice]:
 
             if self.grafo.direcionado:
 
-                if aresta.orig != id_vertice:
+                if arco.orig != id_vertice:
                     continue
 
-                vizinho = aresta.dest
+                vizinho = arco.dest
 
             else:
 
                 vizinho = self.grafo.outro_extremo(
-                    aresta,
+                    arco,
                     id_vertice
                 )
 
             vizinhos.append(
-                (vizinho, aresta.val)
+                (vizinho, arco.val)
             )
 
         return vizinhos

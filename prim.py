@@ -24,29 +24,29 @@ class Prim:
 
         while len(visitados) < len(self.grafo.vertices): #faz enquanto visitados for menor q total de verts
 
-            menor_aresta = None
+            menor_arco = None
             novo_vertice = None
 
             for id in visitados:
 
-                for aresta in self.grafo.lista_adjacencia[id]: #pega as arestas do vertice atual
+                for arco in self.grafo.lista_adjacencia[id]: #pega os arcos do vertice atual
 
-                    vizinho = self.grafo.outro_extremo(aresta, id) #pega o outro vertice da aresta
+                    vizinho = self.grafo.outro_extremo(arco, id) #pega o outro vertice do arco
 
                     if vizinho in visitados: #verifica se ja foi visitado 
                         continue
 
-                    if menor_aresta is None or aresta.val < menor_aresta.val: #verifica se a aresta atual eh menor q a menor aresta ja encontrada
-                        menor_aresta = aresta
+                    if menor_arco is None or arco.val < menor_arco.val: #verifica se o arco atual eh menor q a menor arco ja encontrada
+                        menor_arco = arco
                         novo_vertice = vizinho
 
-            if menor_aresta is None: #se nao encontrar nenhuma aresta, o grafo nao eh conexo
+            if menor_arco is None: #se nao encontrar nenhum arco, o grafo nao eh conexo
                 self.agm = []
                 self.custo = 0
                 raise ValueError("o grafo nao eh conexo.")
 
-            self.agm.append(menor_aresta)
-            self.custo += menor_aresta.val
+            self.agm.append(menor_arco)
+            self.custo += menor_arco.val
             visitados.add(novo_vertice)
 
 
@@ -55,12 +55,12 @@ class Prim:
         texto = "ARVORE GERADORA MINIMA - PRIM\n\n"
 
         if not self.agm:
-            return texto + "AGM sem arestas (grafo com um unico vertice).\n"
+            return texto + "AGM sem arcos (grafo com um unico vertice).\n"
 
-        for aresta in self.agm:
+        for arco in self.agm:
             texto += (
-                f"{aresta.id}: {aresta.orig} -- {aresta.dest} "
-                f"| peso = {aresta.val}\n"
+                f"{arco.id}: {arco.orig} -- {arco.dest} "
+                f"| peso = {arco.val}\n"
             )
 
         texto += f"\nCusto total da AGM: {self.custo}\n"

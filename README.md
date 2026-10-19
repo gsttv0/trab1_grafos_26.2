@@ -19,3 +19,8 @@ python3 main.py
 
 Foi utilizada a IA Claude (Anthropic), apenas para revisão do código e para implementação da interface gráfica.
 
+
+## Formato dos arquivos de grafos
+
+A estrutura usa `Arco`, `grafo.arcos`, `inserir_arco()` e `remover_arco()`.
+O carregador aceita os cabeçalhos `ARCOS` e `ARESTAS` (compatibilidade com arquivos existentes), mantendo o formato `id;origem;destino;peso`.

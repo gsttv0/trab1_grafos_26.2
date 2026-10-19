@@ -36,9 +36,9 @@ class Roy:
 
         for id in self.grafo.vertices:
 
-            for aresta in self.grafo.lista_adjacencia[id]: #pra cada vert, pega sua aresta
+            for arco in self.grafo.lista_adjacencia[id]: #pra cada vert, pega sua arco
 
-                vizinho = self.grafo.outro_extremo(aresta, id)
+                vizinho = self.grafo.outro_extremo(arco, id)
 
                 sucessores[id].append(vizinho) #add vizinho como sucessor do vertice atual
                 antecessores[vizinho].append(id) #add o vertice atual como antecessor do vizinho

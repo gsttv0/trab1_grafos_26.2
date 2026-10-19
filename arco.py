@@ -1,4 +1,4 @@
-class Aresta:
+class Arco:
 
     def __init__(self, id, orig, dest, val):
         self.id = id

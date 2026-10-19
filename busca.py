@@ -4,8 +4,8 @@ class Busca:
 
         self.grafo = grafo
         self.visitados = []
-        self.arvore = [] #arestas que formam a arvore feita na busca
-        self.caminho = [] #aresstas usadados entre a saida e a chegada
+        self.arvore = [] #arcos que formam a arvore feita na busca
+        self.caminho = [] #arcos usadados entre a saida e a chegada
         self.encontrou = False #se encontrou o vertice de chegada ou nao
 
 
@@ -30,26 +30,26 @@ class Busca:
 
             atual = pilha[-1] #pega o ultomo da pilha 
 
-            adjacentes = self.grafo.lista_adjacencia[atual] #recebe as aresta do vertice atual  
+            adjacentes = self.grafo.lista_adjacencia[atual] #recebe os arcos do vertice atual
 
             if indice[atual] == len(adjacentes):
-                pilha.pop() # se ja as aresta desse vert, remove ele do topo da pilha  
+                pilha.pop() # se ja os arcos desse vert, remove ele do topo da pilha
                 continue
 
-            aresta = adjacentes[indice[atual]] #pega a proxim aresta
+            arco = adjacentes[indice[atual]] #pega a proxim arco
 
             indice[atual] += 1
 
-            vizinho = self.grafo.outro_extremo(aresta, atual) #verifica qual o outro vertice da aresta 
+            vizinho = self.grafo.outro_extremo(arco, atual) #verifica qual o outro vertice do arco
 
             if vizinho in pai: #verifica se ja foi visitado  
                 continue
 
-            pai[vizinho] = aresta #atribui a aresta como pai do vizinho
+            pai[vizinho] = arco #atribui o arco como pai do vizinho
             indice[vizinho] = 0 #reseta o indice do vizinho
 
             self.visitados.append(vizinho)
-            self.arvore.append(aresta)
+            self.arvore.append(arco)
             pilha.append(vizinho)
 
             if vizinho == chegada:
@@ -72,20 +72,20 @@ class Busca:
 
         texto += "Ordem de visita: " + ", ".join(self.visitados) + "\n\n"
 
-        texto += "Arestas/arcos da arvore gerada:\n"
+        texto += "Arcos da arvore gerada:\n"
 
         if not self.arvore:
             texto += "  (nenhuma)\n"
 
-        for aresta in self.arvore:
-            texto += f"  {aresta.id}: {aresta.orig} - {aresta.dest}\n"
+        for arco in self.arvore:
+            texto += f"  {arco.id}: {arco.orig} - {arco.dest}\n"
 
         texto += "\n"
 
         if not self.encontrou:
             return texto + f"Nao existe caminho de {saida} ate {chegada}.\n"
 
-        custo = sum(aresta.val for aresta in self.caminho)
+        custo = sum(arco.val for arco in self.caminho)
 
         texto += "Caminho encontrado:\n"
 
@@ -93,9 +93,9 @@ class Busca:
 
         texto += f"  {atual}"
 
-        for aresta in self.caminho:
-            atual = self.grafo.outro_extremo(aresta, atual)
-            texto += f" -[{aresta.id}]-> {atual}"
+        for arco in self.caminho:
+            atual = self.grafo.outro_extremo(arco, atual)
+            texto += f" -[{arco.id}]-> {atual}"
 
         texto += f"\n\nCusto do caminho: {custo}\n"
 
