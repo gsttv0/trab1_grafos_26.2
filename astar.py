@@ -12,12 +12,11 @@ class AStar:
         self.heuristicas = {}
 
 
-    # ==========================================
-    # HAVERSINE
-    # ==========================================
 
+    # HAVERSINE
     def haversine(self, id_origem, id_destino):
 
+        #pega os vertices q possuem as coordenadas  
         origem = self.grafo.vertices[id_origem]
         destino = self.grafo.vertices[id_destino]
 
@@ -31,8 +30,9 @@ class AStar:
                 f"o vertice '{id_destino}' nao possui latitude e longitude."
             )
 
-        raio_terra = 6371.0
+        raio_terra = 6371.0 #raio medio da terra em km
 
+        #converte as coordenadas de graus pra radianos
         lat1 = math.radians(origem.latitude)
         lon1 = math.radians(origem.longitude)
 
@@ -42,6 +42,7 @@ class AStar:
         diferenca_lat = lat2 - lat1
         diferenca_lon = lon2 - lon1
 
+        #formula de HAVERSINE
         a = (
             math.sin(diferenca_lat / 2) ** 2
             +
@@ -55,20 +56,18 @@ class AStar:
             math.sqrt(1 - a)
         )
 
-        distancia = raio_terra * c
+        distancia = raio_terra * c 
 
         return distancia
 
 
-    # ==========================================
-    # CALCULAR HEURISTICAS
-    # ==========================================
 
+    # CALCULAR HEURISTICAS
     def calcular_heuristicas(self, destino):
 
         self.heuristicas = {}
 
-        for id_vertice in self.grafo.vertices:
+        for id_vertice in self.grafo.vertices: #calcula h(n) de cada vertice em relacao ao destino
 
             distancia = self.haversine(
                 id_vertice,
@@ -80,41 +79,35 @@ class AStar:
         return self.heuristicas
 
 
-    # ==========================================
     # OBTER VIZINHOS
-    # ==========================================
-
     def obter_vizinhos(self, id_vertice):
 
         vizinhos = []
 
-        for arco in self.grafo.lista_adjacencia[id_vertice]:
+        for arco in self.grafo.lista_adjacencia[id_vertice]: #percorre os arcos/arestas ligados ao vertice
 
-            if self.grafo.direcionado:
+            if self.grafo.direcionado: #respeita se for direcionado  
 
                 if arco.orig != id_vertice:
                     continue
 
                 vizinho = arco.dest
 
-            else:
+            else: #se nao for direcionado, pega o outro extremo  
 
                 vizinho = self.grafo.outro_extremo(
                     arco,
                     id_vertice
                 )
 
-            vizinhos.append(
+            vizinhos.append( #guarda vizinho e peso
                 (vizinho, arco.val)
             )
 
         return vizinhos
 
 
-    # ==========================================
     # RECONSTRUIR CAMINHO
-    # ==========================================
-
     def reconstruir_caminho(self, anteriores, destino):
 
         caminho = []
@@ -132,12 +125,10 @@ class AStar:
         return caminho
 
 
-    # ==========================================
     # EXECUTAR A*
-    # ==========================================
-
     def executar(self, origem, destino):
 
+        #verifica se origem e destino existem  
         if origem not in self.grafo.vertices:
             raise ValueError(
                 f"o vertice '{origem}' nao existe."
@@ -151,17 +142,17 @@ class AStar:
         self.caminho = []
         self.custo = 0
 
-        self.calcular_heuristicas(destino)
+        self.calcular_heuristicas(destino) #calcula o h(n) de cada vertice ate o destino
 
-        abertos = [origem]
+        abertos = [origem] #vertices q ainda podem ser analisados
 
-        fechados = []
+        fechados = [] #vertices q ja foram analisados
 
-        anteriores = {}
+        anteriores = {} #guarda o predecessor de cada vertice  
 
-        g = {}
+        g = {} #custo real da origem ate o vertice
 
-        f = {}
+        f = {} #f(n) = g(n) + h(n) = custo real + heuristica
 
 
         for id_vertice in self.grafo.vertices:

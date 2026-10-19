@@ -7,54 +7,48 @@ def carregar_grafo_arquivo(caminho_arquivo, direcionado=False):
 
     secao = None
 
-    with open(
+    with open( #abre o arquivo pra leitura
         caminho_arquivo,
         "r",
         encoding="utf-8"
     ) as arquivo:
 
-        for numero_linha, linha in enumerate(
+        for numero_linha, linha in enumerate( #percorre cada linha dele
             arquivo,
             start=1
         ):
 
             linha = linha.strip()
 
-            # Ignora linhas vazias
+            #ignora linhas vazias
             if not linha:
                 continue
 
-            # Ignora comentarios
+            #ignora comentarios
             if linha.startswith("#"):
                 continue
 
-            # ==========================================
-            # SECOES
-            # ==========================================
 
-            if linha.upper() == "VERTICES":
+            if linha.upper() == "VERTICES": #identifica o inicio da secao de vertices
 
                 secao = "VERTICES"
                 continue
 
-            if linha.upper() in ("ARCOS", "ARESTAS"):
+            if linha.upper() in ("ARCOS", "ARESTAS"): #identifica a secao de arcos ou arestas
 
                 secao = "ARCOS"
                 continue
 
 
-            # ==========================================
-            # VERTICES
-            # ==========================================
 
-            if secao == "VERTICES":
+            if secao == "VERTICES": #le o vertice e identifica se tem latitude e longitude
 
                 dados = [
                     dado.strip()
                     for dado in linha.split(";")
                 ]
 
-                if len(dados) == 1:
+                if len(dados) == 1: #se tamanho for 1, pega so o vertice  
 
                     id_vertice = dados[0]
 
@@ -62,7 +56,7 @@ def carregar_grafo_arquivo(caminho_arquivo, direcionado=False):
                         id_vertice
                     )
 
-                elif len(dados) == 3:
+                elif len(dados) == 3: #se tamanho for 3, pega o vertice, latitude e longitude
 
                     id_vertice = dados[0]
 
@@ -97,11 +91,9 @@ def carregar_grafo_arquivo(caminho_arquivo, direcionado=False):
                     )
 
 
-            # ==========================================
-            # ARCOS
-            # ==========================================
 
-            elif secao == "ARCOS":
+
+            elif secao == "ARCOS": #le os arcos/arestas 
 
                 dados = [
                     dado.strip()
